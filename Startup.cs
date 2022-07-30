@@ -42,6 +42,7 @@ namespace MoviesAPI
                     builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader();
                 });
             });
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(MyExceptionFilter));
