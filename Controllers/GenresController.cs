@@ -35,7 +35,7 @@ namespace MoviesAPI.Controllers
         {
             logger.LogInformation("Getting all the genres");
 
-            var genres = await context.Genres.ToListAsync();
+            var genres = await context.Genres.OrderBy(x => x.Name).ToListAsync();
             return mapper.Map<List<GenreDTO>>(genres);
         }
 
