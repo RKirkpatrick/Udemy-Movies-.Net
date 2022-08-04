@@ -45,7 +45,8 @@ namespace MoviesAPI
             });
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<IFileStorageService, AzureStorageService>();
+            services.AddScoped<IFileStorageService, InAppStorageService>();
+            services.AddHttpContextAccessor();
 
             services.AddControllers(options =>
             {
@@ -69,6 +70,8 @@ namespace MoviesAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 
