@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MoviesAPI.Controllers
 {
     [ApiController]
-    [Route("api/movietheaters")]
+    [Route("api/movieTheaters")]
     public class MovieTheatersController : ControllerBase
     {
         private readonly ApplicationDbContext context;
