@@ -26,7 +26,7 @@ namespace MoviesAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<MovieTheaterDTO>>> Get()
         {
-            var entities = await context.MovieTheaters.ToListAsync();
+            var entities = await context.MovieTheaters.OrderBy(x => x.Name).ToListAsync();
             return mapper.Map<List<MovieTheaterDTO>>(entities);
         }
 
