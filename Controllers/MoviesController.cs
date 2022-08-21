@@ -30,8 +30,8 @@ namespace MoviesAPI.Controllers
         [HttpGet("PostGet")]
         public async Task<ActionResult<MoviePostGetDTO>> PostGet()
         {
-            var movieTheaters = await context.MovieTheaters.ToListAsync();
-            var genres = await context.Genres.ToListAsync();
+            var movieTheaters = await context.MovieTheaters.OrderBy(x => x.Name).ToListAsync();
+            var genres = await context.Genres.OrderBy(x => x.Name).ToListAsync();
 
             var movieTheatersDTO = mapper.Map<List<MovieTheaterDTO>>(movieTheaters);
             var genresDTO = mapper.Map<List<GenreDTO>>(genres);
