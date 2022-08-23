@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MoviesAPI.DTOs;
 using MoviesAPI.Entities;
 using MoviesAPI.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,6 +48,19 @@ namespace MoviesAPI.Controllers
             }
 
             return mapper.Map<ActorDTO>(actor);
+        }
+
+        [HttpPost("searchByName")]
+        public async Task<ActionResult<List<ActorsMovieDTO>>> SearchByName([FromBody] string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) { return new List<ActorsMovieDTO>(); }
+
+            return await context.Actors
+                .Where(x => x.Name.Contains(name))
+                .OrderBy(x => x.Name)
+                .Select(x => new ActorsMovieDTO { Id = x.Id, Name = x.Name, Picture = x.Picture })
+                .Take(5)
+                .ToListAsync();
         }
 
         [HttpPost]
