@@ -44,7 +44,7 @@ namespace MoviesAPI.Controllers
         {
             var movie = mapper.Map<Movie>(movieCreationDTO);
 
-            if (movie.Poster != null)
+            if (movieCreationDTO.Poster != null)
             {
                 movie.Poster = await fileStorageService.SaveFile(container, movieCreationDTO.Poster);
             }
