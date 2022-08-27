@@ -13,7 +13,7 @@ namespace MoviesAPI.Controllers
 {
     [Route("api/movies")]
     [ApiController]
-    public class MoviesController: ControllerBase
+    public class MoviesController : ControllerBase
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
@@ -25,6 +25,25 @@ namespace MoviesAPI.Controllers
             this.context = context;
             this.mapper = mapper;
             this.fileStorageService = fileStorageService;
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<MovieDTO>> Get(int id)
+        {
+            var movie = await context.Movies
+                .Include(x => x.MoviesGenres).ThenInclude(x => x.Genre)
+                .Include(x => x.MovieTheatersMovies).ThenInclude(x => x.MovieTheater)
+                .Include(x => x.MoviesActors).ThenInclude(x => x.Actor)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            var dto = mapper.Map<MovieDTO>(movie);
+            dto.Actors = dto.Actors.OrderBy(x => x.Order).ToList();
+            return dto;
         }
 
         [HttpGet("PostGet")]
