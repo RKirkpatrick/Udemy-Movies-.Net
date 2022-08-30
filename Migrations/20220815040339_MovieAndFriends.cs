@@ -30,14 +30,13 @@ namespace MoviesAPI.Migrations
                 columns: table => new
                 {
                     ActorId = table.Column<int>(type: "int", nullable: false),
-                    MoiveId = table.Column<int>(type: "int", nullable: false),
                     Character = table.Column<string>(type: "nvarchar(75)", maxLength: 75, nullable: true),
                     Order = table.Column<int>(type: "int", nullable: false),
                     MovieId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MoviesActors", x => new { x.ActorId, x.MoiveId });
+                    table.PrimaryKey("PK_MoviesActors", x => new { x.ActorId, x.MovieId });
                     table.ForeignKey(
                         name: "FK_MoviesActors_Actors_ActorId",
                         column: x => x.ActorId,

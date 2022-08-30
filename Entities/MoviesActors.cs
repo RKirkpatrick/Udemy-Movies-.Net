@@ -9,7 +9,7 @@ namespace MoviesAPI.Entities
     public class MoviesActors
     {
         public int ActorId { get; set; }
-        public int MoiveId { get; set; }
+        public int MovieId { get; set; }
         [StringLength(maximumLength: 75)]
         public string Character { get; set; }
         public int Order { get; set; }
