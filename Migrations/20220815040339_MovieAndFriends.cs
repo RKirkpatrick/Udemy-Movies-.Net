@@ -32,7 +32,7 @@ namespace MoviesAPI.Migrations
                     ActorId = table.Column<int>(type: "int", nullable: false),
                     Character = table.Column<string>(type: "nvarchar(75)", maxLength: 75, nullable: true),
                     Order = table.Column<int>(type: "int", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: true)
+                    MovieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
