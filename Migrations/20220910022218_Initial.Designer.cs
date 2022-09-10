@@ -11,8 +11,8 @@ using NetTopologySuite.Geometries;
 namespace MoviesAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220815040339_MovieAndFriends")]
-    partial class MovieAndFriends
+    [Migration("20220910022218_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,9 +144,6 @@ namespace MoviesAPI.Migrations
                         .HasMaxLength(75)
                         .HasColumnType("nvarchar(75)");
 
-                    b.Property<int?>("MovieId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
@@ -200,8 +197,10 @@ namespace MoviesAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("MoviesAPI.Entities.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId");
+                        .WithMany("MoviesActors")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Actor");
 
@@ -229,6 +228,8 @@ namespace MoviesAPI.Migrations
 
             modelBuilder.Entity("MoviesAPI.Entities.Movie", b =>
                 {
+                    b.Navigation("MoviesActors");
+
                     b.Navigation("MoviesGenres");
 
                     b.Navigation("MovieTheatersMovies");

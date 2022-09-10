@@ -135,20 +135,17 @@ namespace MoviesAPI.Migrations
                     b.Property<int>("ActorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MoiveId")
+                    b.Property<int>("MovieId")
                         .HasColumnType("int");
 
                     b.Property<string>("Character")
                         .HasMaxLength(75)
                         .HasColumnType("nvarchar(75)");
 
-                    b.Property<int?>("MovieId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.HasKey("ActorId", "MoiveId");
+                    b.HasKey("ActorId", "MovieId");
 
                     b.HasIndex("MovieId");
 
@@ -198,8 +195,10 @@ namespace MoviesAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("MoviesAPI.Entities.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId");
+                        .WithMany("MoviesActors")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Actor");
 
@@ -227,6 +226,8 @@ namespace MoviesAPI.Migrations
 
             modelBuilder.Entity("MoviesAPI.Entities.Movie", b =>
                 {
+                    b.Navigation("MoviesActors");
+
                     b.Navigation("MoviesGenres");
 
                     b.Navigation("MovieTheatersMovies");
